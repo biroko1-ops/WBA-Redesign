@@ -12,10 +12,7 @@
     --done: #1a7a58; --done-bg: #e8f5ee;
     --active: #1b5fa8; --active-bg: #e6f0fb;
     --soon: #a05c10; --soon-bg: #fdf0dc;
-    --gate: #4a40b0; --gate-bg: #eeedfc;
-    --labor: #b84020; --labor-bg: #fdeee8;
     --pending: #888680; --pending-bg: #f0efe8;
-    --urgent: #c03030;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
@@ -24,141 +21,111 @@
   .page-header h1 { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; line-height: 1.4; }
   .page-header .sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; font-family: 'DM Mono', monospace; letter-spacing: 0.02em; }
   .legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
-  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: rgba(255,255,255,0.6); font-family: 'DM Mono', monospace; letter-spacing: 0.02em; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: rgba(255,255,255,0.6); font-family: 'DM Mono', monospace; }
   .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
   .scroll-hint { text-align: center; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink3); letter-spacing: 0.04em; padding: 0.75rem 2.5rem 0.25rem; }
 
-  .timeline-scroll { overflow-x: auto; padding: 2.5rem 2.5rem 1rem; -webkit-overflow-scrolling: touch; }
+  .timeline-scroll { overflow-x: auto; padding: 3rem 2.5rem 1rem; -webkit-overflow-scrolling: touch; }
   .timeline-scroll::-webkit-scrollbar { height: 4px; }
   .timeline-scroll::-webkit-scrollbar-track { background: var(--rule); }
   .timeline-scroll::-webkit-scrollbar-thumb { background: var(--ink3); border-radius: 2px; }
 
-  .timeline-inner { min-width: 1700px; position: relative; padding-bottom: 2rem; }
+  .timeline-inner { min-width: 900px; position: relative; padding-bottom: 2rem; }
   .spine { position: absolute; top: 72px; left: 0; right: 0; height: 2px; background: var(--ink); z-index: 0; }
   .spine-cap { position: absolute; top: 66px; width: 14px; height: 14px; border-radius: 50%; background: var(--ink); }
   .spine-cap.left { left: 0; } .spine-cap.right { right: 0; }
 
   .cols { display: flex; position: relative; z-index: 1; }
-  .col { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; padding: 0 5px; cursor: pointer; }
+  .col { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; padding: 0 8px; cursor: pointer; }
   .col:first-child { padding-left: 0; } .col:last-child { padding-right: 0; }
   .col.above { flex-direction: column-reverse; }
 
   .col-date { font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink3); text-align: center; padding: 6px 0; white-space: nowrap; }
 
-  .col-node { width: 18px; height: 18px; border-radius: 50%; border: 3px solid var(--bg); flex-shrink: 0; position: relative; z-index: 2; transition: transform 0.15s; }
+  .col-node { width: 20px; height: 20px; border-radius: 50%; border: 3px solid var(--bg); flex-shrink: 0; position: relative; z-index: 2; transition: transform 0.15s; }
   .col:hover .col-node { transform: scale(1.25); }
-  .node-done    { background: var(--done); }
   .node-active  { background: var(--active); box-shadow: 0 0 0 4px rgba(27,95,168,0.15); }
-  .node-soon    { background: var(--soon); }
-  .node-gate    { background: var(--gate); box-shadow: 0 0 0 4px rgba(74,64,176,0.15); }
-  .node-labor   { background: var(--labor); }
+  .node-soon    { background: var(--soon); box-shadow: 0 0 0 4px rgba(160,92,16,0.15); }
   .node-pending { background: var(--pending); }
-  .node-urgent  { background: var(--urgent); box-shadow: 0 0 0 4px rgba(192,48,48,0.15); }
 
-  .col-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 10px 10px 9px; width: 100%; transition: border-color 0.15s, box-shadow 0.15s; position: relative; }
+  .col-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 12px 10px; width: 100%; transition: border-color 0.15s, box-shadow 0.15s; position: relative; }
   .col:hover .col-card { border-color: var(--ink3); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
   .col.active-col .col-card { border-color: var(--active); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
 
-  .card-accent { position: absolute; top: 0; left: 0; width: 3px; height: 100%; border-radius: 10px 0 0 10px; }
-  .accent-done    { background: var(--done); }    .accent-active  { background: var(--active); }
-  .accent-soon    { background: var(--soon); }    .accent-gate    { background: var(--gate); }
-  .accent-labor   { background: var(--labor); }   .accent-pending { background: var(--pending); }
-  .accent-urgent  { background: var(--urgent); }
+  .card-accent { position: absolute; top: 0; left: 0; width: 3px; height: 100%; border-radius: 12px 0 0 12px; }
+  .accent-active  { background: var(--active); }
+  .accent-soon    { background: var(--soon); }
+  .accent-pending { background: var(--pending); }
 
-  .card-badge { font-family: 'DM Mono', monospace; font-size: 8px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 5px; border-radius: 20px; display: inline-block; margin-bottom: 5px; }
-  .cbadge-done    { background: var(--done-bg);    color: var(--done);    }
+  .card-badge { font-family: 'DM Mono', monospace; font-size: 8px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 6px; border-radius: 20px; display: inline-block; margin-bottom: 6px; }
   .cbadge-active  { background: var(--active-bg);  color: var(--active);  }
   .cbadge-soon    { background: var(--soon-bg);    color: var(--soon);    }
-  .cbadge-gate    { background: var(--gate-bg);    color: var(--gate);    }
-  .cbadge-labor   { background: var(--labor-bg);   color: var(--labor);   }
   .cbadge-pending { background: var(--pending-bg); color: var(--pending); }
-  .cbadge-urgent  { background: #fdeaea;           color: var(--urgent);  }
 
   .card-title { font-size: 11px; font-weight: 600; color: var(--ink); line-height: 1.3; margin-bottom: 4px; }
-  .card-sub   { font-size: 9px;  color: var(--ink3); line-height: 1.4; margin-bottom: 6px; }
+  .card-sub   { font-size: 9px; color: var(--ink3); line-height: 1.4; margin-bottom: 7px; }
   .card-chips { display: flex; flex-wrap: wrap; gap: 3px; }
 
   .chip { font-size: 9px; font-family: 'DM Mono', monospace; padding: 1px 5px; border-radius: 20px; border: 0.5px solid; white-space: nowrap; font-weight: 500; }
   .chip-det    { background:#EEEDFE; color:#3C3489; border-color:#AFA9EC; }
-  .chip-seiu   { background:#FAECE7; color:#712B13; border-color:#F0997B; }
   .chip-pm     { background:#E6F1FB; color:#0C447C; border-color:#85B7EB; }
   .chip-set    { background:#E1F5EE; color:#085041; border-color:#5DCAA5; }
   .chip-divsec { background:#FBEAF0; color:#72243E; border-color:#ED93B1; }
   .chip-cler   { background:#EAF3DE; color:#27500A; border-color:#97C459; }
   .chip-pps    { background:#FAEEDA; color:#633806; border-color:#EF9F27; }
   .chip-app    { background:#F1EFE8; color:#444441; border-color:#B4B2A9; }
-  .chip-tact   { background:#FCEBEB; color:#791F1F; border-color:#F09595; }
   .chip-itd    { background:#E6F1FB; color:#042C53; border-color:#378ADD; }
-  .chip-pace   { background:#FBEAF0; color:#72243E; border-color:#ED93B1; }
+  .chip-tact   { background:#FCEBEB; color:#791F1F; border-color:#F09595; }
 
-  .detail-panel { display: none; background: var(--surface); border-top: 1px solid var(--rule); padding: 2rem 2.5rem; animation: slideIn 0.2s ease; }
+  .detail-panel { display: none; background: var(--surface); border-top: 1px solid var(--rule); padding: 2.5rem; animation: slideIn 0.2s ease; }
   .detail-panel.open { display: block; }
   @keyframes slideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 
-  .detail-inner  { max-width: 960px; margin: 0 auto; }
-  .detail-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.25rem; }
-  .detail-title  { font-size: 18px; font-weight: 600; color: var(--ink); }
-  .detail-date   { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink3); margin-top: 4px; letter-spacing: 0.03em; }
-  .close-btn     { background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 4px 12px; font-size: 12px; color: var(--ink2); cursor: pointer; font-family: 'DM Mono', monospace; flex-shrink: 0; transition: background 0.15s; }
+  .detail-inner  { max-width: 900px; margin: 0 auto; }
+  .detail-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.5rem; }
+  .detail-title  { font-size: 20px; font-weight: 600; color: var(--ink); }
+  .detail-date   { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink3); margin-top: 5px; }
+  .close-btn     { background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 5px 14px; font-size: 12px; color: var(--ink2); cursor: pointer; font-family: 'DM Mono', monospace; flex-shrink: 0; transition: background 0.15s; }
   .close-btn:hover { background: var(--rule); }
 
-  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
   .detail-section { }
   .detail-section.full { grid-column: 1 / -1; }
 
-  .detail-label { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink3); margin-bottom: 8px; margin-top: 16px; }
+  .detail-label { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink3); margin-bottom: 10px; margin-top: 18px; }
   .detail-label:first-child { margin-top: 0; }
 
   .task-list { list-style: none; }
-  .task-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--ink2); padding: 6px 0; border-bottom: 1px solid var(--rule); line-height: 1.4; }
+  .task-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--ink2); padding: 7px 0; border-bottom: 1px solid var(--rule); line-height: 1.5; }
   .task-list li:last-child { border-bottom: none; }
-  .ticon { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; }
-  .ti-done   { background: var(--ink3); }
-  .ti-active { background: var(--ink3); }
-  .ti-open   { background: var(--ink3); }
-  .task-note   { font-size: 11px; color: var(--ink3); margin-top: 2px; font-style: italic; }
-  .task-owners { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 4px; }
+  .tbullet { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; background: var(--ink3); }
+  .task-note   { font-size: 11px; color: var(--ink3); margin-top: 3px; font-style: italic; }
+  .task-owners { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px; }
 
-  .decision-item { background: var(--bg); border-radius: 8px; border: 1px solid var(--rule); padding: 9px 11px; margin-bottom: 7px; }
-  .decision-item.impasse  { border-left: 3px solid var(--urgent); }
-  .decision-item.asterisk { border-left: 3px solid var(--soon); }
-  .decision-item.resolved { border-left: 3px solid var(--done); }
-  .d-num  { font-family:'DM Mono',monospace; font-size:10px; color:var(--ink3); margin-bottom:3px; }
-  .d-text { font-size:13px; color:var(--ink); }
-  .d-warn { font-size:11px; color:var(--urgent); margin-top:3px; }
-  .d-resolved { font-size:11px; color:var(--done); margin-top:3px; }
+  .msg-box   { background: var(--bg); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; }
+  .msg-title { font-size: 11px; font-weight: 600; color: var(--ink); margin-bottom: 5px; font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.04em; }
+  .msg-text  { font-size: 12px; color: var(--ink2); line-height: 1.6; }
 
-  .prep-item { background: var(--bg); border-radius: 8px; border: 1px solid var(--rule); padding: 9px 11px; margin-bottom: 7px; }
-  .p-title   { font-size:12px; font-weight:600; color:var(--ink); margin-bottom:5px; }
-  .p-list    { list-style:none; }
-  .p-list li { font-size:12px; color:var(--ink2); padding:2px 0; display:flex; gap:6px; }
-  .p-list li::before { content:'—'; color:var(--ink3); flex-shrink:0; }
+  .prep-item { background: var(--bg); border-radius: 8px; border: 1px solid var(--rule); padding: 10px 12px; margin-bottom: 8px; }
+  .p-title   { font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .p-list    { list-style: none; }
+  .p-list li { font-size: 12px; color: var(--ink2); padding: 2px 0; display: flex; gap: 6px; line-height: 1.5; }
+  .p-list li::before { content: '—'; color: var(--ink3); flex-shrink: 0; }
 
-  .office-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px; }
-  .ocard { background:var(--bg); border:1px solid var(--rule); border-radius:8px; padding:10px; }
-  .oname { font-size:12px; font-weight:600; color:var(--ink); margin-bottom:3px; }
-  .ostat { font-size:11px; color:var(--ink2); }
-  .ostat span { font-weight:600; color:var(--ink); }
+  .note-box { background: var(--bg); border-left: 3px solid var(--ink3); border-radius: 0 8px 8px 0; padding: 12px 14px; font-size: 12px; color: var(--ink2); line-height: 1.6; }
 
-  .note-box    { background:var(--bg); border-left:3px solid var(--ink3); border-radius:0 8px 8px 0; padding:10px 12px; font-size:12px; color:var(--ink2); line-height:1.6; }
-  .info-box    { background:var(--active-bg); border-left:3px solid var(--active); border-radius:0 8px 8px 0; padding:10px 12px; font-size:12px; color:var(--active); line-height:1.6; margin-bottom:12px; }
-  .warn-box    { background:#fdeaea; border-left:3px solid var(--urgent); border-radius:0 8px 8px 0; padding:10px 12px; font-size:12px; color:var(--urgent); line-height:1.6; margin-bottom:12px; }
+  .office-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .ocard { background: var(--bg); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; }
+  .oname { font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+  .ostat { font-size: 11px; color: var(--ink2); }
+  .ostat span { font-weight: 600; color: var(--ink); }
 
-  .meeting-list { list-style:none; }
-  .meeting-list li { display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--ink2); padding:6px 0; border-bottom:1px solid var(--rule); }
-  .meeting-list li:last-child { border-bottom:none; }
-  .meeting-time { font-family:'DM Mono',monospace; font-size:11px; color:var(--ink3); }
+  .ongoing-section { background: var(--surface); border-top: 1px solid var(--rule); padding: 2rem 2.5rem; }
+  .ongoing-inner   { max-width: 900px; margin: 0 auto; }
+  .ongoing-title   { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink3); margin-bottom: 12px; }
 
-  .msg-box   { background:var(--bg); border:1px solid var(--rule); border-radius:8px; padding:10px 12px; margin-bottom:7px; }
-  .msg-title { font-size:11px; font-weight:600; color:var(--ink); margin-bottom:4px; font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:0.04em; }
-  .msg-text  { font-size:12px; color:var(--ink2); line-height:1.6; }
-
-  .ongoing-section { background:var(--surface); border-top:1px solid var(--rule); padding:2rem 2.5rem; }
-  .ongoing-inner   { max-width:960px; margin:0 auto; }
-  .ongoing-title   { font-family:'DM Mono',monospace; font-size:10px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink3); margin-bottom:12px; }
-
-  @media (max-width:700px) { .detail-grid { grid-template-columns:1fr; } }
+  @media (max-width: 700px) { .detail-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -166,14 +133,11 @@
 <div class="page-header">
   <div>
     <h1>WBA District Redesign — Phase I</h1>
-    <div class="sub">Alameda County Social Services Agency &nbsp;·&nbsp; March – August 2026</div>
+    <div class="sub">Alameda County Social Services Agency &nbsp;·&nbsp; April – June 2026</div>
   </div>
   <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:var(--done)"></div> Complete</div>
     <div class="legend-item"><div class="legend-dot" style="background:var(--active)"></div> In progress</div>
     <div class="legend-item"><div class="legend-dot" style="background:var(--soon)"></div> Up next</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--gate)"></div> Decision gate</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--labor)"></div> Meeting</div>
     <div class="legend-item"><div class="legend-dot" style="background:var(--pending)"></div> Not started</div>
   </div>
 </div>
@@ -197,10 +161,9 @@
   <div class="ongoing-inner">
     <div class="ongoing-title">Ongoing — SET Monitoring &amp; Accountability (Post-Launch)</div>
     <ul class="task-list">
-      <li><div class="ticon ti-open"></div><div><div>SETs pull CalSAWS Task Completion Reports</div><div class="task-owners" style="margin-top:4px"><span class="chip chip-set">SET</span></div><div class="task-note">Frequency standard across all units — decided by DET before June 1. Two days of data is not enough — monitor trends over time across different points in the month.</div></div></li>
-      <li><div class="ticon ti-open"></div><div><div>SETs identify trends — workers of record with high client walk-in volume</div><div class="task-owners" style="margin-top:4px"><span class="chip chip-set">SET</span></div></div></li>
-      <li><div class="ticon ti-open"></div><div><div>SETs discuss Task Completion Report findings in unit meetings and monthly one-on-one conferences</div><div class="task-owners" style="margin-top:4px"><span class="chip chip-set">SET</span></div></div></li>
-      <li><div class="ticon ti-open"></div><div><div>Performance trends and discrepancies documented in monthly conference memos</div><div class="task-owners" style="margin-top:4px"><span class="chip chip-set">SET</span><span class="chip chip-pm">PM</span></div></div></li>
+      <li><div class="tbullet"></div><div><div>SETs pull Task Search in CalSAWS</div><div class="task-owners" style="margin-top:5px"><span class="chip chip-set">SET</span></div><div class="task-note">Frequency standard across all units — decided by DET before June 1</div></div></li>
+      <li><div class="tbullet"></div><div><div>SETs identify trends — workers of record with high client walk-in volume</div><div class="task-owners" style="margin-top:5px"><span class="chip chip-set">SET</span></div></div></li>
+      <li><div class="tbullet"></div><div><div>SETs discuss trends from Task Search in unit meetings and monthly conferences</div><div class="task-owners" style="margin-top:5px"><span class="chip chip-set">SET</span></div></div></li>
     </ul>
   </div>
 </div>
@@ -208,274 +171,143 @@
 <script>
 const CHIP = {
   det:    ['DET',         'chip-det'],
-  seiu:   ['SEIU',        'chip-seiu'],
   pm:     ['PM',          'chip-pm'],
   set:    ['SET',         'chip-set'],
   divsec: ['Div Sec',     'chip-divsec'],
   cler:   ['Clerical',    'chip-cler'],
   pps:    ['PP&S',        'chip-pps'],
   app:    ['App Support', 'chip-app'],
-  tact:   ['TACT',        'chip-tact'],
   itd:    ['ITD',         'chip-itd'],
-  pace:   ['PACE',        'chip-pace'],
+  tact:   ['TACT',        'chip-tact'],
 };
 
 const steps = [
   {
-    id:1, date:'Mid-March 2026', status:'done',
-    title:'WBA Redesign',
-    sub:'Workgroups → concept → labor',
-    roles:['det','pm','seiu'],
-    tasks:[
-      { label:'Intake and district redesign workgroups established', status:'done', owners:['det','pm'] },
-      { label:'Redesign concept finalized and developed', status:'done', owners:['det','pm'] },
-      { label:'Redesign plan presented to labor (SEIU)', status:'done', owners:['det'] },
-    ],
-    notes:'Concept developed jointly by DET and PM workgroup and presented to labor.'
-  },
-  {
-    id:2, date:'March 31, 2026', status:'done',
-    title:'Floor Meeting',
-    sub:'All four offices — DET & SEIU only',
-    roles:['det','seiu'],
-    meetings:[
-      { office:'North Oakland', time:'9:00 AM' },
-      { office:'Enterprise',    time:'11:00 AM' },
-      { office:'Eastmont',      time:'1:30 PM' },
-      { office:'Hayward',       time:'3:15 PM' },
-      { office:'Fremont & Livermore (via Teams)', time:'4:00 PM' },
-    ],
-    notes:'DET and SEIU floor meetings only. All four offices notified ESTs of the upcoming caseload balancing and DIU conversion timeline on March 31, 2026.'
-  },
-  {
-    id:3, date:'Early April – April 23, 2026', status:'active',
-    title:'Staffing Update & Caseload Balancing',
-    sub:'Staffing verified, caseloads balanced, split cases in progress',
+    id:1, date:'April 6 – 30, 2026', status:'active',
+    title:'Staffing Update, Caseload Balancing & Case Assignment',
+    sub:'Staffing verified · caseloads balanced · cases assigned',
     roles:['pm','cler','pps'],
-    officeForecasts:true,
+    officeForecasts: true,
     tasks:[
-      { label:'Pull current active staff rosters for all eligibility units', status:'done', owners:['pm'] },
-      { label:'Identify all staff currently on leave', status:'done', owners:['pm'], note:'FMLA, extended sick, Workers\' Comp, etc.' },
-      { label:'Update staffing totals for WBA', status:'done', owners:['pm'] },
-      { label:'PP&S provides updated caseload totals by office', status:'done', owners:['pps'] },
-      { label:'PP&S creates split cases list for WBA (all offices)', status:'open', owners:['pps'] },
-      { label:'Each office forecasts total caseload volume to transfer to DIU unit', status:'open', owners:['pm'], note:'Gail Steele: 8 DIU workers | Fremont: 2 DIU workers' },
-      { label:'PM and Clerical calculate case assignments to balance at each office', status:'open', owners:['pm','cler'], note:'Based on PP&S totals' },
-      { label:'All split cases resolved — PM sign-off by April 23', status:'open', owners:['pm'], note:'Required before case assignment phase begins April 24' },
+      { label:'PP&S provides updated caseload totals by office', done:true, owners:['pps'] },
+      { label:'PM pulls "Program Assignment Detailed Inventory Report" to assign cases to DIU staff', done:false, owners:['pm'] },
+      { label:'Each office forecasts total caseload volume to transfer to DIU unit', done:false, owners:['pm'], note:'Gail Steele: 8 | Fremont: 2 | Livermore: 1 | Eastmont: 9 | Enterprise: 7 | North Oakland: 8' },
+      { label:'All split cases resolved — PM sign-off by April 23', done:false, owners:['pm'], note:'Required before case assignment begins April 24' },
+      { label:'EST II DIU caseloads assembled (target: 300 cases)', done:false, owners:['pm','cler'] },
+      { label:'EST III DIU caseloads assembled (target: 700 cases)', done:false, owners:['pm','cler'] },
+      { label:'Phase 1 of case assignment for DIU completed by 4/30', done:false, owners:['pm','cler'], note:'Due April 30' },
+      { label:'Phase 2 of case assignment for DIU staff completed before June 1', done:false, owners:['pm','cler'], note:'Due before June 1' },
     ],
-    notes:'Staffing verification complete. PP&S caseload totals received. Split case list still pending from PP&S. Case assignment calculations and caseload balancing to follow once split cases are resolved.'
+    notes:'Staffing verification and PP&S caseload totals complete as of April 9. Split case list still pending from PP&S. Case assignment calculations and balancing to follow once split cases are resolved by April 23.'
   },
   {
-    id:4, date:'April 6 – 24, 2026', status:'active',
+    id:2, date:'April 6 – 30, 2026', status:'active',
     title:'DIU to District Transition Plan',
-    sub:'Transition plan, training & cheat sheets — PM & SET',
-    roles:['pm','set','divsec'],
+    sub:'Case assignment · training · profile setup · rotation continuity',
+    roles:['pm','set','divsec','cler','tact'],
     tasks:[
-      { label:'PM and SET develop transition plan for district staff performing DIU function', status:'active', owners:['pm','set'] },
-      { label:'Create secondary profile for district caseload in CalSAWS by 4/17', status:'open', owners:['divsec'], note:'Due April 17' },
-      { label:'Cheat sheets developed — what to do when sitting down, how to pull tasks, how to pull reports', status:'open', owners:['pm','set'], note:'No time for full efficiency training — cheat sheets are the practical deliverable' },
-      { label:'Training component developed — commonly used EST tasks, features, functionality, report pulling, and caseload maintenance tips', status:'open', owners:['pm','set'], note:'Current training does not prepare staff for this role — new materials needed' },
-      { label:'Mini workgroup of top performing ESTs identified to support peer training', status:'open', owners:['pm','set'], note:'Identify top performers (e.g. Jamiesha) to help develop training materials and support peers' },
-      { label:'Generic tasks created for Get Next practice — can be cancelled after use', status:'open', owners:['cler'], note:'Clerical creates generic tasks so staff can practice Get Next feature before go-live' },
-      { label:'Staff communication sent — General Process Newsletter 23-11 distributed to all staff', status:'open', owners:['pm','set'], note:'Send as early as possible so staff understand the pull method, Get Next functionality, and supervisor role' },
-      { label:'Transition plan for district staff rotating into drop-in function finalized', status:'open', owners:['pm','set'] },
-      { label:'Rotation schedule completed by 4/24', status:'open', owners:['pm'], note:'Due April 24 — factor in telecommute schedules when building the calendar' },
+      { label:'DIU staff receive 300 cases (EST II) and 700 cases (EST III)', done:false, owners:['pm'], note:'Combination of Medi-Cal cases and other programs with RRR dates in the future' },
+      { label:'Maintain current DIU rotation schedule through May 31, 2026', done:false, owners:['pm','set'], note:'DIU continues operating under current model until June 1 launch' },
+      { label:'Caseload efficiency training (TACT) for all DIU staff', done:false, owners:['tact'], note:'Due April 27, 2026 — covers how to manage district caseload alongside drop-in function' },
+      { label:'Finalize training plan for DIU staff by 4/17', done:false, owners:['pm','set'], note:'Due April 17' },
+      { label:'Roll out training to DIU staff by 4/24', done:false, owners:['pm','set'], note:'Due April 24' },
+      { label:'Provide post-training overview once cases are assigned to DIU — 4/27 to 4/30', done:false, owners:['pm','set'], note:'Walk staff through their assigned caseload after April 24 case assignment' },
+      { label:'SET to set up schedule in CalSAWS for DIU staff by 5/29', done:false, owners:['set'], note:'Due May 29' },
     ],
-    notes:'Runs parallel to caseload balancing. Telecommute schedules must be factored into the rotation calendar — daily rotation preferred to minimize TC complexity. Div Secretary creates secondary CalSAWS profile for district caseload by April 17.'
+    notes:'DIU staff continue performing drop-in function under current model through May 31. Case assignment (300 for EST II, 700 for EST III) drives the conversion. Training must be finalized before cases are assigned so staff are prepared.'
   },
   {
-    id:5, date:'April 13 – May 2026', status:'soon',
+    id:3, date:'April 13 – May 15, 2026', status:'active',
     title:'District to DIU Transition Plan',
-    sub:'District staff prepared for DIU rotation — training, access & messaging',
+    sub:'Preparing district staff for drop-in rotation starting June 1',
     roles:['pm','set','divsec','app'],
     messaging:[
-      { title:'Drop-in work is same day / next day', text:'Drop-in tasks do not carry over for multiple days. Staff must complete the task the same day or next day — tasks cannot be left pending.' },
-      { title:'Regular caseload work during slow periods', text:'While on drop-in duty, staff may work their regular caseload during slow foot traffic periods. No appointments will be scheduled on drop-in days. Waiting room does not open until 8:30 AM — staff on flex 7:00–4:30 can work caseload until then.' },
+      { title:'Drop-in work is same day / next day', text:'Drop-in tasks do not carry over. Staff must complete the task same day or next day — tasks cannot be left pending.' },
+      { title:'Regular caseload work during slow periods', text:'While on drop-in duty, staff may work their regular caseload during slow foot traffic periods. No appointments scheduled on drop-in days. Waiting room opens at 8:30 AM — flex staff (7:00–4:30) can work caseload until then.' },
     ],
     tasks:[
-      { label:'SETs review General Process Newsletter 23-11: Drop-In Process in CalSAWS with unit by 4/30', status:'open', owners:['set'], note:'Due April 30 — covers Get Next functionality and reception log' },
-      { label:'Q-Matic access confirmed for all district staff by 4/30', status:'open', owners:['app','set'], note:'Due April 30 — App Support provisions generic logins, SET verifies at current workstation' },
-      { label:'Rotation schedule completed by 4/24', status:'open', owners:['pm'], note:'Due April 24 — use SharePoint calendar or shared Excel' },
-      { label:'ESTs complete Q-Matic training by 5/8', status:'open', owners:['set','pm'], note:'Due May 8 — shadowing current DIU workers; demo video option' },
-      { label:'Create drop-in profiles for all district staff by 5/15', status:'open', owners:['divsec'], note:'Due May 15' },
-      { label:'ESTs complete Get Next training by 5/15', status:'open', owners:['set','pm'], note:'Due May 15 — include reception log training; use generic tasks created for practice' },
-      { label:'Buddy SET confirmed for each rotation day at each office', status:'open', owners:['pm','set'], note:'SET of the day physically present in drop-in supervisor office; backup SET confirmed for lunch and escalations — team of two' },
-      { label:'Key staff messaging communicated to all district staff', status:'open', owners:['pm','set'], note:'Same day/next day rule; regular caseload work during slow periods; no appointments on drop-in days' },
+      { label:'DIU tasks training for SETs', done:false, owners:['set','pm'], note:'SETs trained on DIU task management before rotation begins' },
+      { label:'Rotation schedule for ESTs completed by 4/24', done:false, owners:['pm'], note:'Due April 24 — factor in telecommute schedules; use SharePoint calendar or shared Excel' },
+      { label:'Rotation schedule for SETs completed by 4/24', done:false, owners:['pm'], note:'Due April 24 — supervisor rotation aligned with EST rotation calendar' },
+      { label:'SETs review General Process Newsletter 23-11: Drop-In Process in CalSAWS with unit by 4/30', done:false, owners:['set'], note:'Due April 30 — covers Get Next functionality and reception log' },
+      { label:'Q-Matic access confirmed for all ESTs and SETs by 4/30', done:false, owners:['app','set'], note:'Due April 30 — App Support provisions generic logins, SET verifies at current workstation' },
+      { label:'ESTs complete Q-Matic training by 5/8', done:false, owners:['set','pm'], note:'Due May 8 — shadowing current DIU workers; demo video option' },
+      { label:'Create drop-in profiles for all district staff by 5/15', done:false, owners:['divsec'], note:'Due May 15' },
+      { label:'ESTs complete Get Next training by 5/15 — add Get Next functionality to district profiles', done:false, owners:['set','pm'], note:'Due May 15 — include reception log training' },
     ],
-    notes:'Prepares all district staff for DIU rotation starting June 1. SETs lead training delivery. Div Secretary creates drop-in profiles. App Support provisions Q-Matic access. Rotation schedule must account for telecommute — daily rotation preferred.'
+    notes:'Prepares all district staff for the June 1 rotation launch. Telecommute schedules must be factored into the rotation calendar — daily rotation preferred to minimize TC complexity.'
   },
   {
-    id:6, date:'April 24 – 30, 2026', status:'soon',
-    title:'Case Assignment',
-    sub:'Cases assigned and assembled — PM & Clerical',
-    roles:['pm','cler'],
-    tasks:[
-      { label:'EST II DIU caseloads assembled (target: 300 cases)', status:'open', owners:['pm','cler'] },
-      { label:'EST III DIU caseloads assembled (target: 700 cases)', status:'open', owners:['pm','cler'] },
-      { label:'Clerical processes all case transfer documentation', status:'open', owners:['cler'] },
-      { label:'Phase 1 of case assignment for DIU completed by 4/30', status:'open', owners:['pm','cler'], note:'Due April 30' },
-      { label:'Phase 2 of case assignment for DIU staff completed before June 1', status:'open', owners:['pm','cler'], note:'Due before June 1' },
-    ],
-    notes:'Case assignment follows completion of caseload balancing. PM and Clerical organize and execute all case assignments.'
-  },
-  {
-    id:7, date:'April 8, 2026', status:'soon', gate:true,
-    title:'Pre-Launch Decisions',
-    sub:'All decisions finalized internally by EOD',
-    roles:['det','seiu','pace'],
-    decisions:[
-      { num:'1', text:'Pull vs. Push Method — pull (Get Next) confirmed as agreed-upon approach', resolved:true, resolvedNote:'Confirmed in team meeting April 3 — DET position regardless of labor disagreement' },
-      { num:'2', text:'Unit Rotation Configuration — flexible mix of staff (not full unit model); daily rotation favored to avoid TC complications' },
-      { num:'3', text:'Rotation Frequency — daily confirmed as preferred; accounts for telecommute and flex schedules' },
-      { num:'4', text:'Client/Worker Assignment — staff serve any client vs. home unit clients only', impasse:true },
-      { num:'5', text:'Confirming no quiet time during DIU duty or front end duty' },
-      { num:'6', text:'SET Rotation Frequency — daily confirmed as preferred; buddy SET / backup SET required for each rotation day' },
-      { num:'7', text:'GA Unemployable rotation timing — 4th week (least busy) vs. beginning of month (highest GA client volume); Robyn takes lead' },
-      { num:'8', text:'PACE engagement — DET determines when and how to bring PACE into process discussions', asterisk:true },
-    ],
-    tasks:[
-      { label:'Pull method confirmed — Decision 1 resolved internally', status:'open', owners:['det'], note:'Still needs to be presented to SEIU on April 10' },
-      { label:'Client/Worker Assignment impasse resolved with SEIU', status:'open', owners:['det','seiu'], note:'Priority item — current point of disagreement' },
-      { label:'GA Unemployable rotation timing finalized — Robyn leads with Nicole supporting', status:'open', owners:['pm'], note:'4th week model vs. beginning of month — North Oakland sees high GA volume early in month' },
-      { label:'Buddy SET / backup SET structure confirmed for all offices', status:'open', owners:['det','pm'], note:'One SET of the day in drop-in supervisor office; backup SET for lunch coverage and escalations — team of two' },
-      { label:'All decisions finalized internally by DET', status:'open', owners:['det'], note:'Must be locked before April 10 meeting' },
-    ],
-    notes:'Decision 1 (pull method) confirmed internally April 3. Decision 6 — daily SET rotation favored; buddy SET system needed. Decision 7 — Robyn leads, Nicole supports. PACE still not folded into discussions.'
-  },
-  {
-    id:8, date:'April 24, 2026', status:'soon', gate:true,
-    title:'Intake Model Finalized',
-    sub:'All intake design decisions locked',
-    roles:['det','pm','pps'],
-    tasks:[
-      { label:'Identify/Confirm technology that will be used for caseload assignment and balancing', status:'open', owners:['det','pm'] },
-      { label:'Determine timeline for automation', status:'open', owners:['det','pm'] },
-      { label:'Revisit CalSAWS functionality for intake scheduling after system update in May 2026', status:'open', owners:['det','pm'], note:'Pending May 2026 CalSAWS system update' },
-      { label:'Divisions assess intake caseload volume and collapse/convert intake to district units as needed', status:'open', owners:['det','pm'] },
-      { label:'Walk-in appointments and eApps factored into new assignment model', status:'open', owners:['det','pm'] },
-      { label:'PP&S intake handbook updated to align with new intake model', status:'open', owners:['pps'] },
-    ],
-    notes:'All intake model design decisions must be finalized by April 24. Caseload assignment model eliminates ZIP code routing and uses shared document for management. All items pending.'
-  },
-  {
-    id:9, date:'April 10, 2026', status:'soon', labor:true,
-    title:'DET/SEIU Redesign Follow-Up',
-    sub:'Present updated draft plan with action items',
-    roles:['det','seiu'],
-    tasks:[
-      { label:'DET presents all pre-launch decisions to SEIU', status:'open', owners:['det','seiu'] },
-      { label:'Pull method position presented — DET confirms Option A (any client, pull method)', status:'open', owners:['det','seiu'], note:'Labor favors Option B (home unit clients only) — DET position is Option A is the only equitable approach' },
-      { label:'Full revised draft plan reviewed and discussed with labor', status:'open', owners:['det','seiu'] },
-      { label:'Action items documented and assigned', status:'open', owners:['det','seiu'] },
-    ],
-    notes:'Formal DET/SEIU redesign follow-up meeting. Purpose is to present updated draft plan with action items reflecting all decisions finalized on April 8.'
-  },
-  {
-    id:10, date:'April – May 2026', status:'soon',
+    id:4, date:'April – May 2026', status:'soon',
     title:'Pre-Launch Operational Prep',
     sub:'Assessments, access & training before June 1',
     roles:['pm','set','divsec','app','itd'],
     prepSections:[
       { title:'Ergonomic assessment — PM (with Office Services + Ergo Labs)', items:['PM assesses which staff need ergonomic accommodations','Assess current workstations — who has ergo, who does not','Daily rotation model reduces ergo burden (one day vs. weeks/months stationed)','Coordinate with Office Services and Ergo Labs as needed'] },
-      { title:'Technology assessment — PM + ITD', items:['Ensure all technology is up to date at DIU workstations','Determine what technology is available at flexible workstations','App Support involved if access provisioning needed'] },
-      { title:'System access & drop-in profiles — PM + Div Sec', items:['All district and intake staff have drop-in profiles in CalSAWS','Div Sec and PM confirm all profiles active before training begins'] },
+      { title:'Technology assessment — PM + ITD', items:['Ensure all technology is up to date at DIU workstations','Determine what technology is available at flexible workstations'] },
+      { title:'System access & drop-in profiles — PM + Div Sec', items:['All district staff have drop-in profiles confirmed in CalSAWS','Div Sec and PM confirm all profiles active before training begins'] },
       { title:'Q-Matic access — App Support provisions, SET verifies', items:['App Support confirms generic logins active for all staff','SETs verify staff can log in at current workstation','Staff log in at current workstation to call clients at their window'] },
-      { title:'Training — PM (current DIU staff as subject matter experts)', items:['Cheat sheets: what to do when sitting down, how to pull tasks, pull reports, manage caseload','Q-Matic demo and training — all transitioning staff','CalSAWS: Get Next, reception log, tasks — all transitioning staff','Task Completion Report training — SETs only','Current DIU staff (e.g. Jamiesha) support peers via mini workgroup','Options: recorded Teams video, step-by-step guide, real case simulation using generic tasks, or shadowing DIU workers'] },
+      { title:'Training — PM (current DIU staff as subject matter experts)', items:['Cheat sheets: what to do when sitting down, how to pull tasks, pull reports, manage caseload','Q-Matic demo and training — all transitioning staff','CalSAWS: Get Next, reception log, tasks — all transitioning staff','Task Completion Report training — SETs only','Current DIU staff support peers as subject matter experts','Options: recorded Teams video, step-by-step guide, real case simulation, or shadowing DIU workers'] },
     ],
     tasks:[
-      { label:'Ergonomic assessment completed — who has ergo, who does not, at all offices', status:'open', owners:['pm'], note:'Coordinate with Office Services and Ergo Labs' },
-      { label:'Technology assessment completed at all offices', status:'open', owners:['pm','itd'] },
-      { label:'All staff drop-in profiles confirmed in CalSAWS', status:'open', owners:['pm','divsec'] },
-      { label:'Q-Matic generic logins active and verified at current workstations', status:'open', owners:['app','set'] },
-      { label:'Cheat sheets finalized and distributed to all transitioning staff', status:'open', owners:['pm','set'] },
-      { label:'Q-Matic and Get Next training delivered to all transitioning staff', status:'open', owners:['pm'] },
-      { label:'CalSAWS training (Get Next, reception log, tasks) completed', status:'open', owners:['pm'] },
-      { label:'Task Completion Report training delivered to all SETs', status:'open', owners:['pm','set'] },
-      { label:'DET decides SET monitoring frequency — standard across all units', status:'open', owners:['det'], note:'Weekly or monthly — must be decided before June 1' },
+      { label:'Ergonomic assessment completed — who has ergo, who does not, at all offices', done:false, owners:['pm'], note:'Coordinate with Office Services and Ergo Labs' },
+      { label:'Technology assessment completed at all offices', done:false, owners:['pm','itd'] },
+      { label:'All staff drop-in profiles confirmed in CalSAWS', done:false, owners:['pm','divsec'] },
+      { label:'Q-Matic generic logins active and verified at current workstations', done:false, owners:['app','set'] },
+      { label:'Cheat sheets finalized and distributed to all transitioning staff', done:false, owners:['pm','set'] },
+      { label:'Q-Matic and Get Next training delivered to all transitioning staff', done:false, owners:['pm'] },
+      { label:'CalSAWS training (Get Next, reception log, tasks) completed', done:false, owners:['pm'] },
+      { label:'Task Completion Report training delivered to all SETs', done:false, owners:['pm','set'] },
+      { label:'DET decides SET monitoring frequency — standard across all units', done:false, owners:['det'], note:'Weekly or monthly — must be decided before June 1' },
     ],
-    notes:'All operational preparation must be complete before June 1 go-live. PM owns training with current DIU staff as subject matter experts.'
+    notes:'All operational preparation must be complete before June 1 go-live. PM owns training with current DIU staff as subject matter experts. Daily rotation model means staff are not stationed long-term — reduces full ergo workstation requirement but current needs should still be inventoried.'
   },
   {
-    id:11, date:'June 1, 2026', status:'pending',
+    id:5, date:'June 1, 2026', status:'pending',
     title:'District Redesign Launch',
     sub:'All district workers live on daily rotation',
     roles:['det','pm','set'],
     tasks:[
-      { label:'All district workers placed in confirmed daily rotation', status:'open', owners:['pm','set'] },
-      { label:'SharePoint rotation calendar live at all WBA offices', status:'open', owners:['pm'] },
-      { label:'Pull method (Get Next) active in CalSAWS — all DIU slots', status:'open', owners:['pm','set'] },
-      { label:'SET of the day designated and physically present in drop-in supervisor office', status:'open', owners:['pm','set'], note:'Buddy SET confirmed as backup for lunch breaks and escalations — team of two' },
-      { label:'PM and SET available to monitor day one operations', status:'open', owners:['pm','set'] },
-      { label:'DET and PM review first month report statistics', status:'open', owners:['det','pm'] },
+      { label:'All district workers placed in confirmed daily rotation', done:false, owners:['pm','set'] },
+      { label:'SharePoint rotation calendar live at all WBA offices', done:false, owners:['pm'] },
+      { label:'Pull method (Get Next) active in CalSAWS — all DIU slots', done:false, owners:['pm','set'] },
+      { label:'SET of the day designated — physically present in drop-in supervisor office', done:false, owners:['pm','set'], note:'Buddy SET confirmed as backup for lunch and escalations — team of two' },
+      { label:'PM and SET available to monitor day one operations', done:false, owners:['pm','set'] },
+      { label:'DET and PM review first month report statistics', done:false, owners:['det','pm'] },
     ],
-    notes:'Operational launch of the district redesign. All system, ergonomic, equipment, training, and access dependencies must be verified live before June 1.'
-  },
-  {
-    id:12, date:'June–July 2026', status:'pending',
-    title:'Intake Redesign Phase Two',
-    sub:'Front end and back end consolidation',
-    roles:['det','pm','pps'],
-    tasks:[
-      { label:'Intake transition plan developed — what the transition looks like for intake staff', status:'open', owners:['det','pm'] },
-      { label:'Intake cleanup effort identified — suspense cases factored in', status:'open', owners:['pm','pps'] },
-      { label:'Interview timeframes made uniform — one hour vs. three hour scenarios addressed', status:'open', owners:['det','pm','pps'] },
-      { label:'Caseload assignment model implemented — no ZIP code routing', status:'open', owners:['det','pm'], note:'Shared document used for caseload assignment management' },
-      { label:'Walk-in appointments and eApps factored into new assignment model', status:'open', owners:['det','pm'] },
-      { label:'Rotation established for front end intake function', status:'open', owners:['pm'] },
-      { label:'PP&S updates intake handbook to align with new model', status:'open', owners:['pps'] },
-    ],
-    notes:'Front end and back end consolidated under this phase. Clerical role unchanged — assign cases as normal. All items pending.'
-  },
-  {
-    id:13, date:'August 2026', status:'pending',
-    title:'CSCC Proposal',
-    sub:'Not ready — details to be determined',
-    roles:['det','seiu','pm','pps','itd','tact'],
-    warnNote:'CSCC Proposal is not ready. Details to be determined.',
-    tasks:[
-      { label:'DET and ITD determine technology approach and infrastructure', status:'open', owners:['det','itd'] },
-      { label:'SET, PM, and TACT provide training to Contact Center on new model rollout', status:'open', owners:['set','pm','tact'] },
-      { label:'PP&S updates handbooks and newsletters', status:'open', owners:['pps'] },
-    ],
-    notes:'CSCC Proposal — details to be determined. ITD and DET determine technology approach. SET, PM, and TACT provide Contact Center training on model rollout.'
+    notes:'Operational launch of the district redesign. All system, ergonomic, equipment, training, and access dependencies must be verified before June 1. SET of the day sits in the drop-in supervisor office with confirmed backup SET.'
   }
 ];
 
-const STATUS_NODE  = { done:'node-done', active:'node-active', soon:'node-soon', pending:'node-pending' };
-const STATUS_BADGE = { done:'cbadge-done', active:'cbadge-active', soon:'cbadge-soon', pending:'cbadge-pending' };
-const STATUS_LABEL = { done:'Complete', active:'In progress', soon:'Up next', pending:'Not started' };
-const STATUS_ACCENT= { done:'accent-done', active:'accent-active', soon:'accent-soon', pending:'accent-pending' };
-const TI_CLASS = { done:'ti-done', active:'ti-active', open:'ti-open' };
-const TI_ICON  = { done:'', active:'', open:'' };
+const STATUS_NODE  = { active:'node-active', soon:'node-soon', pending:'node-pending' };
+const STATUS_BADGE = { active:'cbadge-active', soon:'cbadge-soon', pending:'cbadge-pending' };
+const STATUS_LABEL = { active:'In progress', soon:'Up next', pending:'Not started' };
+const STATUS_ACCENT= { active:'accent-active', soon:'accent-soon', pending:'accent-pending' };
 
 let openId = null;
 
 function chipHTML(k) { const c=CHIP[k]; if(!c) return ''; return `<span class="chip ${c[1]}">${c[0]}</span>`; }
+
 function taskHTML(t) {
-  const ic=TI_CLASS[t.status]||'ti-open', il=TI_ICON[t.status]||'';
-  return `<li><div class="ticon ${ic}">${il}</div><div><div>${t.label}</div>${t.owners?`<div class="task-owners">${t.owners.map(chipHTML).join('')}</div>`:''}${t.note?`<div class="task-note">${t.note}</div>`:''}</div></li>`;
+  return `<li><div class="tbullet"></div><div><div>${t.label}</div>${t.owners?`<div class="task-owners">${t.owners.map(chipHTML).join('')}</div>`:''}${t.note?`<div class="task-note">${t.note}</div>`:''}</div></li>`;
 }
 
 function buildTimeline() {
   const cols = document.getElementById('cols');
   steps.forEach((s, i) => {
     const above = i % 2 === 1;
-    const nodeClass   = s.gate ? 'node-gate' : s.labor ? 'node-labor' : s.urgent ? 'node-urgent' : STATUS_NODE[s.status];
-    const accentClass = s.gate ? 'accent-gate' : s.labor ? 'accent-labor' : s.urgent ? 'accent-urgent' : STATUS_ACCENT[s.status];
-    const badgeClass  = s.gate ? 'cbadge-gate' : s.labor ? 'cbadge-labor' : s.urgent ? 'cbadge-urgent' : STATUS_BADGE[s.status];
-    const badgeLabel  = s.gate ? 'Decision Gate' : s.labor ? 'Meeting' : s.urgent ? 'Urgent' : STATUS_LABEL[s.status];
     const col = document.createElement('div');
     col.className = `col${above?' above':''}`;
     col.id = `col-${s.id}`;
     col.onclick = () => toggleDetail(s.id);
     col.innerHTML = `
       <div class="col-date">${s.date}</div>
-      <div style="background:var(--ink);width:2px;height:28px;flex-shrink:0"></div>
-      <div class="col-node ${nodeClass}"></div>
-      <div style="width:2px;height:28px;flex-shrink:0;opacity:0"></div>
+      <div style="background:var(--ink);width:2px;height:32px;flex-shrink:0"></div>
+      <div class="col-node ${STATUS_NODE[s.status]}"></div>
+      <div style="width:2px;height:32px;flex-shrink:0;opacity:0"></div>
       <div class="col-card">
-        <div class="card-accent ${accentClass}"></div>
-        <span class="card-badge ${badgeClass}">${badgeLabel}</span>
+        <div class="card-accent ${STATUS_ACCENT[s.status]}"></div>
+        <span class="card-badge ${STATUS_BADGE[s.status]}">${STATUS_LABEL[s.status]}</span>
         <div class="card-title">${s.title}</div>
         <div class="card-sub">${s.sub}</div>
         <div class="card-chips">${s.roles.map(chipHTML).join('')}</div>
@@ -505,48 +337,31 @@ function renderDetail(id) {
   const s = steps.find(x => x.id === id);
   const inner = document.getElementById('detail-inner');
 
-  const infoHTML = s.gate && s.id===7 ? `<div class="info-box">All decisions must be finalized by EOD April 8 to present at the April 10 DET/SEIU Redesign Follow-Up Meeting. Decision 1 (pull method) already confirmed internally.</div>` :
-                   s.gate && s.id===8 ? `<div class="info-box">All intake model decisions must be finalized by April 24.</div>` : '';
-  const warnHTML = s.warnNote ? `<div class="warn-box">${s.warnNote}</div>` : '';
-
-  const decisionsHTML = s.decisions ? `
-    <div class="detail-label">Pre-launch decisions</div>
-    ${s.decisions.map(d=>`
-      <div class="decision-item${d.impasse?' impasse':d.asterisk?' asterisk':d.resolved?' resolved':''}">
-        <div class="d-num">Decision ${d.num}${d.asterisk?' *':''}</div>
-        <div class="d-text">${d.text}</div>
-        ${d.impasse?`<div class="d-warn">⚠ Current labor/DET impasse — priority resolution needed</div>`:''}
-        ${d.resolved?`<div class="d-resolved">✓ Confirmed internally — April 3 team meeting</div>`:''}
-      </div>`).join('')}
-    <div style="font-size:11px;color:var(--ink3);margin-top:4px;font-style:italic">* PACE engagement — DET determines timing</div>` : '';
-
-  const prepHTML = s.prepSections ? `
-    <div class="detail-label">Action items by area</div>
-    ${s.prepSections.map(p=>`<div class="prep-item"><div class="p-title">${p.title}</div><ul class="p-list">${p.items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`).join('')}` : '';
-
   const officeHTML = s.officeForecasts ? `
     <div class="detail-label">Office DIU staffing — forecast inputs needed</div>
     <div class="office-grid">
       <div class="ocard"><div class="oname">Gail Steele (South County)</div><div class="ostat">DIU Workers: <span>8</span></div><div class="ostat" style="color:var(--ink3);margin-top:3px">Forecast total caseload volume to transfer</div></div>
       <div class="ocard"><div class="oname">Fremont</div><div class="ostat">DIU Workers: <span>2</span></div><div class="ostat" style="color:var(--ink3);margin-top:3px">Forecast total caseload volume to transfer</div></div>
+      <div class="ocard"><div class="oname">Livermore</div><div class="ostat">DIU Workers: <span>1</span></div><div class="ostat" style="color:var(--ink3);margin-top:3px">Forecast total caseload volume to transfer</div></div>
+      <div class="ocard"><div class="oname">Eastmont</div><div class="ostat">DIU Workers: <span>9</span></div><div class="ostat" style="color:var(--ink3);margin-top:3px">Forecast total caseload volume to transfer</div></div>
+      <div class="ocard"><div class="oname">Enterprise</div><div class="ostat">DIU Workers: <span>7</span></div><div class="ostat" style="color:var(--ink3);margin-top:3px">Forecast total caseload volume to transfer</div></div>
+      <div class="ocard"><div class="oname">North Oakland</div><div class="ostat">DIU Workers: <span>8</span></div><div class="ostat" style="color:var(--ink3);margin-top:3px">Forecast total caseload volume to transfer</div></div>
     </div>` : '';
-
-  const meetingsHTML = s.meetings ? `
-    <div class="detail-label">Floor meeting schedule — March 31, 2026</div>
-    <ul class="meeting-list">
-      ${s.meetings.map(m=>`<li><span>${m.office}</span><span class="meeting-time">${m.time}</span></li>`).join('')}
-    </ul>` : '';
 
   const messagingHTML = s.messaging ? `
     <div class="detail-label">Staff messaging — key points to communicate</div>
     ${s.messaging.map(m=>`<div class="msg-box"><div class="msg-title">${m.title}</div><div class="msg-text">${m.text}</div></div>`).join('')}` : '';
 
-  const tasksHTML = s.tasks ? `
+  const prepHTML = s.prepSections ? `
+    <div class="detail-label">Action items by area</div>
+    ${s.prepSections.map(p=>`<div class="prep-item"><div class="p-title">${p.title}</div><ul class="p-list">${p.items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`).join('')}` : '';
+
+  const tasksHTML = `
     <div class="detail-label">Task list</div>
-    <ul class="task-list">${s.tasks.map(taskHTML).join('')}</ul>` : '';
+    <ul class="task-list">${s.tasks.map(taskHTML).join('')}</ul>`;
 
   const notesHTML = s.notes ? `<div class="detail-label">Notes</div><div class="note-box">${s.notes}</div>` : '';
-  const hasExtra = s.decisions || s.prepSections || s.officeForecasts || s.meetings || s.messaging;
+  const hasExtra = s.officeForecasts || s.messaging || s.prepSections;
 
   inner.innerHTML = `
     <div class="detail-header">
@@ -557,9 +372,8 @@ function renderDetail(id) {
       </div>
       <button class="close-btn" onclick="toggleDetail(${s.id})">Close ✕</button>
     </div>
-    ${infoHTML}${warnHTML}
     <div class="detail-grid">
-      ${hasExtra ? `<div class="detail-section full">${decisionsHTML}${prepHTML}${officeHTML}${meetingsHTML}${messagingHTML}</div>` : ''}
+      ${hasExtra ? `<div class="detail-section full">${officeHTML}${messagingHTML}${prepHTML}</div>` : ''}
       <div class="detail-section">${tasksHTML}</div>
       <div class="detail-section">${notesHTML}</div>
     </div>
