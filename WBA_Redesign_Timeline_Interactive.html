@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>WBA District Redesign — Phase I Timeline</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background: #f0f2f6;
+  color: #1a1a2e;
+  -webkit-tap-highlight-color: transparent;
+}
+
+header {
+  background: #1F3864;
+  padding: 2rem 2rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+header h1 { color: #fff; font-size: 1.25rem; font-weight: 600; margin-bottom: 2px; }
+header p  { color: #8aa8cc; font-size: 0.78rem; margin-bottom: 1rem; }
+
+.filter-bar {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.filter-btn {
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+.filter-btn.active {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  border-color: rgba(255,255,255,0.6);
+}
+
+.main { padding: 1.5rem 1rem 3rem; max-width: 860px; margin: 0 auto; }
+
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 10px; top: 0; bottom: 0;
+  width: 2px; background: #d0d5e0;
+}
+
+.phase-group { margin-bottom: 2rem; }
+
+.phase-label-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 1rem; margin-left: -28px;
+}
+.phase-pill {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: #fff;
+  padding: 4px 14px; border-radius: 20px; white-space: nowrap;
+}
+.phase-dates { font-size: 0.72rem; color: #888; }
+
+.milestone {
+  position: relative;
+  margin-bottom: 10px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.milestone::before {
+  content: '';
+  position: absolute;
+  left: -22px; top: 16px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: #aaa;
+  z-index: 1;
+  transition: transform 0.15s;
+}
+.milestone:active::before { transform: scale(1.3); }
+
+.milestone-header {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #e2e6ef;
+  padding: 12px 14px;
+  display: flex; align-items: center; gap: 10px;
+  transition: border-color 0.15s;
+  user-select: none;
+}
+.milestone:hover .milestone-header { border-color: #b0b8d0; }
+.milestone.open .milestone-header {
+  border-radius: 10px 10px 0 0;
+  border-bottom-color: transparent;
+}
+
+.m-date {
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.04em; white-space: nowrap;
+  min-width: 56px;
+}
+.m-title { flex: 1; font-size: 0.85rem; font-weight: 500; color: #1a1a2e; line-height: 1.35; }
+.m-arrow {
+  width: 16px; height: 16px; flex-shrink: 0;
+  border-right: 2px solid #aaa;
+  border-bottom: 2px solid #aaa;
+  transform: rotate(45deg);
+  transition: transform 0.2s;
+  margin-top: -4px;
+}
+.milestone.open .m-arrow { transform: rotate(225deg); margin-top: 4px; }
+
+.milestone-detail {
+  background: #fff;
+  border: 1px solid #e2e6ef;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 0 14px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease, padding 0.25s ease;
+}
+.milestone.open .milestone-detail {
+  max-height: 300px;
+  padding: 12px 14px 14px;
+}
+
+.detail-row {
+  display: flex; gap: 8px;
+  margin-bottom: 6px; align-items: flex-start;
+}
+.detail-label {
+  font-size: 0.7rem; font-weight: 600; color: #888;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  white-space: nowrap; min-width: 54px; padding-top: 1px;
+}
+.detail-val { font-size: 0.82rem; color: #333; line-height: 1.45; }
+
+.launch-block {
+  margin: 1.5rem 0 2rem;
+  position: relative;
+}
+.launch-block::before {
+  content: '';
+  position: absolute;
+  left: -22px; top: 24px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #1F3864;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 3px #1F3864;
+  z-index: 1;
+}
+.launch-card {
+  background: #1F3864;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap;
+}
+.launch-date { font-size: 1.5rem; font-weight: 700; color: #fff; white-space: nowrap; }
+.launch-sep { width: 1px; height: 40px; background: rgba(255,255,255,0.2); }
+.launch-info h3 { color: #fff; font-size: 0.95rem; font-weight: 600; margin-bottom: 3px; }
+.launch-info p  { color: #8aa8cc; font-size: 0.78rem; line-height: 1.5; }
+
+.ongoing-group { margin-top: 0.5rem; }
+.ongoing-item {
+  background: #fff;
+  border-radius: 10px;
+  border-left: 3px solid #555;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  display: flex; align-items: center; gap: 10px;
+}
+.ongoing-item:hover { border-color: #1F3864; }
+.ongoing-freq {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: #2F5496; white-space: nowrap;
+  min-width: 64px;
+}
+.ongoing-text { font-size: 0.83rem; color: #333; flex: 1; line-height: 1.35; }
+.ongoing-owner { font-size: 0.7rem; color: #888; white-space: nowrap; }
+
+.stats-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  margin-bottom: 1.5rem;
+}
+.stat-card {
+  background: #fff; border-radius: 10px;
+  border: 1px solid #e2e6ef;
+  padding: 12px; text-align: center;
+}
+.stat-num  { font-size: 1.4rem; font-weight: 700; color: #1F3864; }
+.stat-lbl  { font-size: 0.7rem; color: #888; margin-top: 2px; }
+
+footer {
+  text-align: center; font-size: 0.72rem; color: #aaa;
+  padding: 2rem 1rem;
+  border-top: 1px solid #e2e6ef;
+}
+
+@media (max-width: 480px) {
+  header { padding: 1.25rem 1rem 1rem; }
+  header h1 { font-size: 1rem; }
+  .launch-sep { display: none; }
+  .stats-row { grid-template-columns: repeat(3,1fr); }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>WBA District Redesign — Phase I</h1>
+  <p>Alameda County SSA &nbsp;·&nbsp; April – June 2026 &nbsp;·&nbsp; Tap any item to expand</p>
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="diu">DIU to District</button>
+    <button class="filter-btn" data-filter="district">District to DIU</button>
+    <button class="filter-btn" data-filter="prep">Pre-launch</button>
+    <button class="filter-btn" data-filter="training">Training</button>
+    <button class="filter-btn" data-filter="ongoing">Ongoing</button>
+  </div>
+</header>
+
+<div class="main">
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num">6</div><div class="stat-lbl">Offices</div></div>
+    <div class="stat-card"><div class="stat-num">157</div><div class="stat-lbl">Total ESTs</div></div>
+    <div class="stat-card"><div class="stat-num">June 1</div><div class="stat-lbl">Go-live</div></div>
+  </div>
+
+  <div class="timeline" id="timeline">
+
+    <div class="phase-group" data-phase="diu">
+      <div class="phase-label-row">
+        <span class="phase-pill" style="background:#2F5496">DIU to District</span>
+        <span class="phase-dates">April 6 – May 31</span>
+      </div>
+
+      <div class="milestone" data-phase="diu" data-date="April 6" style="--dot:#2F5496">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#2F5496">Apr 6</span>
+          <span class="m-title">PP&S provides updated caseload totals by office</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">PP&S / PM</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">PP&S pulls current totals across all six offices to establish the distribution baseline for case assignment.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="diu" data-date="April 6" style="--dot:#2F5496">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#2F5496">Apr 6</span>
+          <span class="m-title">PM pulls Program Assignment Detailed Inventory Report</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">PM</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">PM uses the report to drive case assignments to DIU ESTs. Each office forecasts total caseload volume to transfer.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="diu" data-date="April 17" style="--dot:#2F5496">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#2F5496">Apr 17</span>
+          <span class="m-title">Training plan for DIU ESTs finalized</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">PM / SET</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">Training plan confirmed and scheduled for all DIU ESTs transitioning to district function.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="diu" data-date="April 23" style="--dot:#2F5496">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#2F5496">Apr 23</span>
+          <span class="m-title">All split cases resolved — PM sign-off</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">PM</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">All cases with multiple programs split across ESTs are consolidated. All district/active programs assigned to the EST with the oldest RRR.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="diu training" data-date="April 27" style="--dot:#7B3F9E">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#7B3F9E">Apr 27</span>
+          <span class="m-title">TACT caseload efficiency training complete</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">TACT</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">All DIU ESTs complete TACT caseload efficiency training. Post-training overview held April 27–30 once cases are assigned.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="diu" data-date="April 30" style="--dot:#2F5496">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#2F5496">Apr 30</span>
+          <span class="m-title">EST caseloads assembled; Phase 1 case assignment complete</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">PM</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">EST II caseloads target 300 cases. EST III caseloads target 700 cases. Case assignment hierarchy: Priority 1 Medi-Cal, Priority 2 cases with RRRs after July 2026.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="diu" data-date="April 30" style="--dot:#2F5496">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#2F5496">Apr 30</span>
+          <span class="m-title">SET sets up rotation schedule in CalSAWS for DIU ESTs</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">SET</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">Rotation schedule configured in CalSAWS so DIU ESTs can continue operating under current rotation model through May 31.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="diu" data-date="May 31" style="--dot:#2F5496">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#2F5496">May 31</span>
+          <span class="m-title">Current DIU rotation schedule ends</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">PM / SET</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">DIU ESTs have been operating under the current rotation while receiving their new district caseloads. Rotation ends in preparation for June 1 launch.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-group" data-phase="district">
+      <div class="phase-label-row">
+        <span class="phase-pill" style="background:#1D6F42">District to DIU</span>
+        <span class="phase-dates">April 13 – May 22</span>
+      </div>
+
+      <div class="milestone" data-phase="district" data-date="April 24" style="--dot:#1D6F42">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#1D6F42">Apr 24</span>
+          <span class="m-title">EST and SET rotation schedules complete</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">PM</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">Daily rotation schedules finalized for all district ESTs and SETs across all six offices.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="district" data-date="April 30" style="--dot:#1D6F42">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#1D6F42">Apr 30</span>
+          <span class="m-title">Qmatic access confirmed; GP Newsletter 23-11 reviewed</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">PM / SET</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">Qmatic access confirmed for all ESTs and SETs. SETs review General Process Newsletter 23-11 Drop-In Process in CalSAWS with their units.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="district" data-date="April 30" style="--dot:#1D6F42">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#1D6F42">Apr 30</span>
+          <span class="m-title">Redesign overview — Floor Meeting Q&A with all staff</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">DET</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">All district staff receive a redesign overview. Division Directors briefed on Phase I status and office readiness.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="district training" data-date="May 8" style="--dot:#7B3F9E">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#7B3F9E">May 8</span>
+          <span class="m-title">Get Next access granted; DIU tasks training for SETs</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">PM / ITD / SET</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">Get Next access granted to all district ESTs and SETs. DIU functionality and tasks training delivered to SETs.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="district prep" data-date="May 15" style="--dot:#1D6F42">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#1D6F42">May 15</span>
+          <span class="m-title">Drop-in profiles created; Phase 2 case assignment complete</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">Div Sec / SET / PM</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">Drop-in profiles created and confirmed in CalSAWS for all district ESTs. Phase 2 case assignment complete. Task Search training delivered to all SETs. Cheat sheets finalized and distributed.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="district prep" data-date="May 19" style="--dot:#C55A11">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#C55A11">May 19</span>
+          <span class="m-title">Confirm no impact to CalSAWS Appointment Schedule release</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">PM / ITD</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">The May CalSAWS release includes enhancements to Appointment Scheduling. Confirm no impact to go-live operations before proceeding.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="district training" data-date="May 22" style="--dot:#7B3F9E">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#7B3F9E">May 22</span>
+          <span class="m-title">ESTs complete Qmatic and Get Next training</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">SET / PM</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">All district ESTs complete Qmatic and Get Next training. All system training dependencies verified before June 1 go-live.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-group" data-phase="prep">
+      <div class="phase-label-row">
+        <span class="phase-pill" style="background:#C55A11">Pre-launch prep</span>
+        <span class="phase-dates">May 1 – May 31</span>
+      </div>
+
+      <div class="milestone" data-phase="prep" data-date="May 1" style="--dot:#C55A11">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#C55A11">May 1</span>
+          <span class="m-title">Ergonomic and technology assessments at all offices</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">PM / ITD</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">Ergonomic assessments completed at all six offices to identify who has ergo equipment. Technology assessments confirm workstation readiness for Qmatic and Get Next.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="prep" data-date="May 1" style="--dot:#C55A11">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#C55A11">May 1</span>
+          <span class="m-title">Office-specific support plans finalized</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">PM</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">Each of the six offices has a tailored support plan to ensure uniform implementation. Accounts for differences in DIU history, staffing levels, and office capacity.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="prep" data-date="May 29" style="--dot:#C55A11">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#C55A11">May 29</span>
+          <span class="m-title">Launch confirmation communicated to all staff</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">PM</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">All staff notified via email and SharePoint that June 1 rotation is confirmed live. Final readiness check at all offices.</span></div>
+        </div>
+      </div>
+
+      <div class="milestone" data-phase="prep" data-date="May 31" style="--dot:#C55A11">
+        <div class="milestone-header">
+          <span class="m-date" style="color:#C55A11">May 31</span>
+          <span class="m-title">DET confirms SET monitoring frequency across all units</span>
+          <div class="m-arrow"></div>
+        </div>
+        <div class="milestone-detail">
+          <div class="detail-row"><span class="detail-label">Owner</span><span class="detail-val">DET</span></div>
+          <div class="detail-row"><span class="detail-label">Detail</span><span class="detail-val">DET confirms whether SET monitoring frequency is weekly or monthly — standardized across all units before go-live.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="launch-block">
+      <div class="launch-card">
+        <div class="launch-date">June 1, 2026</div>
+        <div class="launch-sep"></div>
+        <div class="launch-info">
+          <h3>District Redesign — Go Live</h3>
+          <p>All district ESTs in confirmed daily rotation. Get Next active in CalSAWS. SharePoint calendar live at all WBA offices. Buddy SET confirmed at each office. PM and SET on-site day one.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-group" data-phase="ongoing">
+      <div class="phase-label-row">
+        <span class="phase-pill" style="background:#444">Ongoing</span>
+        <span class="phase-dates">June 1 onward</span>
+      </div>
+
+      <div class="ongoing-group">
+        <div class="ongoing-item" data-phase="ongoing"><span class="ongoing-freq">Weekly</span><span class="ongoing-text">SET reviews Task Search, Qmatic, Case Audit; flags trends to PM</span><span class="ongoing-owner">SET</span></div>
+        <div class="ongoing-item" data-phase="ongoing"><span class="ongoing-freq">Weekly</span><span class="ongoing-text">Caseload balancing using Power BI dashboard — rotating office schedule</span><span class="ongoing-owner">PP&S / PM / DET</span></div>
+        <div class="ongoing-item" data-phase="ongoing"><span class="ongoing-freq">July</span><span class="ongoing-text">30-day review — DET and PM assess first month statistics</span><span class="ongoing-owner">DET / PM</span></div>
+        <div class="ongoing-item" data-phase="ongoing"><span class="ongoing-freq">Monthly</span><span class="ongoing-text">PM reviews section trends; Division Director reviews cross-office patterns</span><span class="ongoing-owner">PM / DD</span></div>
+        <div class="ongoing-item" data-phase="ongoing"><span class="ongoing-freq">August</span><span class="ongoing-text">60-day review — Division Directors receive performance summary</span><span class="ongoing-owner">DD / PM</span></div>
+        <div class="ongoing-item" data-phase="ongoing"><span class="ongoing-freq">September</span><span class="ongoing-text">First full quarterly evaluation</span><span class="ongoing-owner">DET / PM / DD</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  WBA District Redesign — Phase I &nbsp;·&nbsp; Alameda County Social Services Agency &nbsp;·&nbsp; April 2026
+</footer>
+
+<script>
+document.querySelectorAll('.milestone').forEach(m => {
+  const dot = m.style.getPropertyValue('--dot') || '#aaa';
+  const before = document.createElement('style');
+  before.textContent = '';
+  m.addEventListener('click', () => {
+    const isOpen = m.classList.contains('open');
+    document.querySelectorAll('.milestone.open').forEach(o => o.classList.remove('open'));
+    if (!isOpen) m.classList.add('open');
+  });
+  m.addEventListener('touchend', e => {
+    e.preventDefault();
+    m.click();
+  });
+  m.querySelector('.milestone-header').style.borderLeftColor = dot;
+});
+
+document.querySelectorAll('.milestone').forEach(m => {
+  const dot = m.querySelector('.m-date').style.color;
+  m.style.setProperty('--dot-color', dot);
+  const pseudo = m;
+  pseudo.addEventListener('mouseenter', () => {
+    m.querySelector('.milestone-header').style.borderColor = dot;
+  });
+  pseudo.addEventListener('mouseleave', () => {
+    if (!m.classList.contains('open')) {
+      m.querySelector('.milestone-header').style.borderColor = '#e2e6ef';
+    }
+  });
+});
+
+document.querySelectorAll('.milestone::before').forEach(() => {});
+const styleEl = document.createElement('style');
+document.querySelectorAll('.milestone').forEach((m, i) => {
+  const color = m.querySelector('.m-date').style.color;
+  styleEl.textContent += `.milestone:nth-of-type(${i+1})::before { background: ${color}; }\n`;
+});
+document.head.appendChild(styleEl);
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+
+    document.querySelectorAll('.milestone').forEach(m => {
+      if (filter === 'all') {
+        m.style.display = '';
+      } else {
+        const phases = (m.dataset.phase || '').split(' ');
+        m.style.display = phases.includes(filter) ? '' : 'none';
+      }
+    });
+
+    document.querySelectorAll('.ongoing-item').forEach(item => {
+      item.style.display = (filter === 'all' || filter === 'ongoing') ? '' : 'none';
+    });
+
+    document.querySelectorAll('.phase-group').forEach(group => {
+      const visible = [...group.querySelectorAll('.milestone, .ongoing-item')].some(el => el.style.display !== 'none');
+      group.style.display = visible ? '' : 'none';
+    });
+
+    document.querySelectorAll('.milestone.open').forEach(m => m.classList.remove('open'));
+  });
+
+  btn.addEventListener('touchend', e => { e.preventDefault(); btn.click(); });
+});
+</script>
+</body>
+</html>
